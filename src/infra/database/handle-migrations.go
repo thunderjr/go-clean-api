@@ -31,14 +31,16 @@ func Migrate(db *gorm.DB) error {
 
 	modelChannel := make(chan interface{})
 	doneChannel := make(chan error)
+
+	go handleModelsChannel(db, modelChannel, doneChannel)
 	go handleModelsChannel(db, modelChannel, doneChannel)
 
 	for _, model := range models {
 		modelChannel <- model
 	}
 
-	waitGroup.Wait()
 	close(modelChannel)
+	waitGroup.Wait()
 
 	select {
 	case err := <-doneChannel:
