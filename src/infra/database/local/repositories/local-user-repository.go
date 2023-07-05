@@ -39,17 +39,17 @@ func (r *LocalUserRepository) GetUser(userId string) (entities.User, error) {
 	}
 }
 
-func (r *LocalUserRepository) SaveUser(user entities.User) error {
+func (r *LocalUserRepository) SaveUser(user entities.User) *entities.User {
 	resultChan := make(chan error)
 
-	go func() {
-		modelUser := models.UserModel{
-			BaseModel: models.BaseModel{
-				ID: uuid.NewV4(),
-			},
-			Name: user.Name,
-		}
+	modelUser := models.UserModel{
+		BaseModel: models.BaseModel{
+			ID: uuid.NewV4(),
+		},
+		Name: user.Name,
+	}
 
+	go func() {
 		if err := r.db.Create(&modelUser).Error; err != nil {
 			resultChan <- err
 		}
@@ -57,7 +57,9 @@ func (r *LocalUserRepository) SaveUser(user entities.User) error {
 		resultChan <- nil
 	}()
 
-	return <-resultChan
+	<-resultChan
+
+	return modelUser.ToUser()
 }
 
 func (r *LocalUserRepository) UpdateUser(user entities.User) error {
