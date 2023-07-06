@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/thunderjr/go-clean-api/src/application/features"
-	"github.com/thunderjr/go-clean-api/src/domain/entities"
 )
 
 type CreateUserController struct {
@@ -17,8 +16,8 @@ func NewCreateUserController(f *features.CreateUserFeature) Controller {
 	}
 }
 
-func (c *CreateUserController) Handle(data any) Response {
-	user, err := c.createUserFeature.CreateUser((data.(*entities.User)).Name)
+func (c *CreateUserController) Handle(data map[string]interface{}) Response {
+	user, err := c.createUserFeature.CreateUser(data["name"].(string))
 
 	if err != nil {
 		return Response{
@@ -31,6 +30,6 @@ func (c *CreateUserController) Handle(data any) Response {
 
 	return Response{
 		Data:   user,
-		Status: http.StatusOK,
+		Status: http.StatusCreated,
 	}
 }
