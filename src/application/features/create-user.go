@@ -9,7 +9,7 @@ type CreateUserFeature struct {
 	repository repositories.UserRepository
 }
 
-func GetCreateUserFeature(r repositories.UserRepository) *CreateUserFeature {
+func NewCreateUserFeature(r repositories.UserRepository) *CreateUserFeature {
 	return &CreateUserFeature{
 		repository: r,
 	}

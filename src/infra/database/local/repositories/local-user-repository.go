@@ -12,7 +12,7 @@ type LocalUserRepository struct {
 	db *gorm.DB
 }
 
-func GetLocalUserRepository(db *gorm.DB) repositories.UserRepository {
+func NewLocalUserRepository(db *gorm.DB) repositories.UserRepository {
 	return &LocalUserRepository{
 		db,
 	}

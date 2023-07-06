@@ -11,7 +11,7 @@ type CreateUserController struct {
 	createUserFeature *features.CreateUserFeature
 }
 
-func GetCreateUserController(f *features.CreateUserFeature) Controller {
+func NewCreateUserController(f *features.CreateUserFeature) Controller {
 	return &CreateUserController{
 		createUserFeature: f,
 	}

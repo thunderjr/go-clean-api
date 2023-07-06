@@ -11,7 +11,7 @@ type LocalTaskRepository struct {
 	db *gorm.DB
 }
 
-func GetLocalTaskRepository(db *gorm.DB) LocalTaskRepository {
+func NewLocalTaskRepository(db *gorm.DB) LocalTaskRepository {
 	return LocalTaskRepository{
 		db,
 	}
