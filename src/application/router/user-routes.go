@@ -14,3 +14,11 @@ func CreateUserRoute(router *Router) {
 
 	(*router).Handle("POST", "/user", controller)
 }
+
+func GetUserRoute(router *Router) {
+	repository := local_repositories.NewLocalUserRepository(local_database.DB)
+	feature := features.NewGetUserFeature(repository)
+	controller := controllers.NewGetUserController(feature)
+
+	(*router).Handle("GET", "/user", controller)
+}
