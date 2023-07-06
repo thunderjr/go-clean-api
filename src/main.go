@@ -4,9 +4,10 @@ import (
 	"log"
 
 	"github.com/labstack/echo/v4"
-	"github.com/thunderjr/go-clean-api/src/application/router"
+	r "github.com/thunderjr/go-clean-api/src/application/router"
 	migrations "github.com/thunderjr/go-clean-api/src/infra/database"
 	local_database "github.com/thunderjr/go-clean-api/src/infra/database/local"
+	"github.com/thunderjr/go-clean-api/src/infra/http"
 )
 
 func main() {
@@ -17,7 +18,9 @@ func main() {
 	}
 
 	echoServer := echo.New()
-	router.Init(echoServer)
+	router := http.NewEchoRouter(echoServer)
+
+	r.InitRoutes(&router)
 
 	echoServer.Logger.Fatal(echoServer.Start(":1323"))
 }
