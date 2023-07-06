@@ -6,5 +6,5 @@ type Response struct {
 }
 
 type Controller interface {
-	Handle(data map[string]interface{}) Response
+	Handle(data map[string]interface{}) *Response
 }

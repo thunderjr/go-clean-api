@@ -16,11 +16,11 @@ func NewCreateUserController(f *features.CreateUserFeature) Controller {
 	}
 }
 
-func (c *CreateUserController) Handle(data map[string]interface{}) Response {
+func (c *CreateUserController) Handle(data map[string]interface{}) *Response {
 	user, err := c.createUserFeature.CreateUser(data["name"].(string))
 
 	if err != nil {
-		return Response{
+		return &Response{
 			Data: map[string]interface{}{
 				"message": err.Error(),
 			},
@@ -28,7 +28,7 @@ func (c *CreateUserController) Handle(data map[string]interface{}) Response {
 		}
 	}
 
-	return Response{
+	return &Response{
 		Data:   user,
 		Status: http.StatusCreated,
 	}
