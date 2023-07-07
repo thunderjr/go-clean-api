@@ -9,7 +9,7 @@ import (
 
 func CreateUserRoute(router *Router) {
 	repository := local_repositories.NewLocalUserRepository(local_database.DB)
-	feature := features.NewCreateUserFeature(repository)
+	feature := features.NewCreateUserFeature(&repository)
 	controller := controllers.NewCreateUserController(feature)
 
 	(*router).Handle("POST", "/user", controller)
@@ -17,7 +17,7 @@ func CreateUserRoute(router *Router) {
 
 func GetUserRoute(router *Router) {
 	repository := local_repositories.NewLocalUserRepository(local_database.DB)
-	feature := features.NewGetUserFeature(repository)
+	feature := features.NewGetUserFeature(&repository)
 	controller := controllers.NewGetUserController(feature)
 
 	(*router).Handle("GET", "/user", controller)

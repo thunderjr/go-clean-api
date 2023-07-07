@@ -6,21 +6,21 @@ import (
 )
 
 type CreateUserFeature struct {
-	repository repositories.UserRepository
+	repository *repositories.UserRepository
 }
 
-func NewCreateUserFeature(r repositories.UserRepository) *CreateUserFeature {
+func NewCreateUserFeature(r *repositories.UserRepository) *CreateUserFeature {
 	return &CreateUserFeature{
 		repository: r,
 	}
 }
 
-func (f CreateUserFeature) CreateUser(name string) (*entities.User, error) {
+func (f *CreateUserFeature) CreateUser(name string) (*entities.User, error) {
 	user := entities.User{
 		Name: name,
 	}
 
-	user = *f.repository.SaveUser(user)
+	user = *(*f.repository).SaveUser(user)
 
 	return &user, nil
 }
