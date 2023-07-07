@@ -24,7 +24,7 @@ func (r *LocalUserRepository) GetUser(userId string) (entities.User, error) {
 
 	go func() {
 		var user models.UserModel
-		if err := r.db.Where("id = ?", userId).Preload("Tasks").First(user).Error; err != nil {
+		if err := r.db.Where("id = ?", userId).Preload("Tasks").First(&user).Error; err != nil {
 			errorChan <- err
 		}
 
