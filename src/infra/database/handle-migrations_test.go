@@ -15,15 +15,15 @@ func TestMigrations(t *testing.T) {
 		t.Error("Unable to connect to Test Database", err)
 	}
 
-	err = infra_database.Migrate(db)
-	if err != nil {
-		t.Error("Error migrating database: ", err)
-	}
-
 	defer func() {
 		err = os.Remove("test_database.db")
 		if err != nil {
 			t.Error("Unable to delete test_database.db file", err)
 		}
 	}()
+
+	err = infra_database.Migrate(db)
+	if err != nil {
+		t.Error("Error migrating database: ", err)
+	}
 }
