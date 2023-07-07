@@ -12,7 +12,14 @@ import (
 
 func main() {
 	db := local_database.Init()
-	err := migrations.Migrate(db)
+	DB, err := db.DB()
+	if err != nil {
+		log.Panic("Error getting DB instance", err)
+	}
+
+	defer DB.Close()
+
+	err = migrations.Migrate(db)
 	if err != nil {
 		log.Panic("Error migrating database", err)
 	}
