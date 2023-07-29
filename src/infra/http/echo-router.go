@@ -1,8 +1,6 @@
 package http
 
 import (
-	"reflect"
-
 	"github.com/labstack/echo/v4"
 	"github.com/thunderjr/go-clean-api/src/application/helpers"
 	"github.com/thunderjr/go-clean-api/src/application/router"
@@ -21,12 +19,12 @@ func NewEchoRouter(e *echo.Echo) router.Router {
 
 func (r *EchoRouter) Handle(method string, path string, controller controllers.Controller) error {
 	return helpers.InvokeWithError(r.e, method, path, func(ctx echo.Context) error {
-		var data *interface{} = new(interface{})
+		data := make(map[string]interface{})
 		if err := ctx.Bind(&data); err != nil {
 			return err
 		}
 
-		res := controller.Handle(reflect.ValueOf(*data).Interface().(map[string]interface{}))
+		res := controller.Handle(data)
 		return ctx.JSON(res.Status, res.Data)
 	})
 }
